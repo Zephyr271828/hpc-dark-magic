@@ -26,7 +26,11 @@ What it does is:
 I'm not sure whether this sounds convenient to others but I find it pretty efficient.
 
 ## Fast Login
-Although many of you should be familiar with how to configure ssh-key, there are some hosts that disable ssh-key verification and require 2FA, which is annoying. `fast_login.sh` spawns the host, interacts with it and types password and option automatically, and all you need to do is to click DUO on your phone!  
+Although many of you should be familiar with how to configure ssh-key, there are some hosts that disable ssh-key verification and require 2FA, which is annoying. `fast_login.sh` spawns the host, interacts with it and types password and option automatically, and all you need to do is to click DUO on your phone! 
+```bash
+# usage
+expect fast_login.sh
+``` 
 However, you should be aware the constraints and risks of this method:
 1. this only works in terminal, but not on vscode remote-ssh extension, because vscode remote-ssh invokes ssh in a non-interactive mode, where automatic interaction is impossible.
 2. you should be aware that simply put your password in a script has its risks. I'm 100\% sure there are ways to encrypt the password, which is one of the future directions of this project.
