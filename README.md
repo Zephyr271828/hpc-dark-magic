@@ -36,4 +36,4 @@ However, you should be aware the constraints and risks of this method:
 2. you should be aware that simply put your password in a script has its risks. I'm 100\% sure there are ways to encrypt the password, which is one of the future directions of this project.
 
 ## Debug
-Well, you know we can first sbatch a job and then ssh to the node to do some interactive node. I don't really want to explain what `debug.py` does but you may find it pretty useful.
+Well, you know we can first sbatch a job and then ssh to the node to do some interactive node. I don't really want to explain what `keep_alive.py` does but you may find it pretty useful.
