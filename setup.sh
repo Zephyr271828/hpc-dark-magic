@@ -41,7 +41,6 @@ generate_sbatch_header() {
   local output_dir="logs"
   local cpus_per_task="$2"
   local account="${ACCOUNT}"
-  local partition="${6:-${DEFAULT_PARTITION}}"
   local mem="${3:-64GB}"
   local ntasks="1"
   local time="$4"
@@ -55,10 +54,10 @@ generate_sbatch_header() {
 #SBATCH --error=$output_dir/$job_name.err
 #SBATCH --cpus-per-task=$cpus_per_task
 #SBATCH --account=$account
-#SBATCH --partition=$partition
 #SBATCH --mem=${mem}GB
 #SBATCH --ntasks=$ntasks
 #SBATCH --time=$time:00:00
+#SBATCH --constraint=a100|h100
 #SBATCH --gres=gpu:$gpus
 #SBATCH --mail-type=all
 #SBATCH --mail-user=$mail_user

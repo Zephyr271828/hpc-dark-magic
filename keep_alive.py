@@ -6,7 +6,6 @@ from threading import Thread, Event
 
 def keep_alive(stop_evt: Event,
                device: torch.device,
-               interval_s: float = 1.0,
                mat_size: int = 512):
     """Continuously launch tiny matrix adds on the given GPU."""
     # allocate one small tensor once on this device
@@ -15,18 +14,13 @@ def keep_alive(stop_evt: Event,
     torch.cuda.synchronize(device)
     while not stop_evt.is_set():
         # a trivial GPU kernel launch
-        z = x + y
+        z = x @ y
         # force completion on this device
         torch.cuda.synchronize(device)
-        # sleep so we only do ~1 launch per `interval_s`
-        time.sleep(interval_s)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--interval", type=float, default=1.0,
-                        help="Seconds between keep-alive kernels")
-    parser.add_argument("--size",    type=int,   default=512,
-                        help="Matrix size for the dummy operation")
+    parser.add_argument("--size", type=int, default=1024, help="Matrix size for the dummy operation")
     args = parser.parse_args()
 
     num_gpus = torch.cuda.device_count()
@@ -39,7 +33,7 @@ if __name__ == "__main__":
         dev = torch.device(f"cuda:{i}")
         t = Thread(
             target=keep_alive,
-            args=(stop_evt, dev, args.interval, args.size),
+            args=(stop_evt, dev, args.size),
             daemon=True,
         )
         t.start()
